@@ -1,0 +1,133 @@
+algoritmo "Restaurante"
+
+var
+   vetNomes: vetor[1..10] de caractere
+   vetQuantidade: vetor[1..10] de inteiro
+   vetData: vetor[1..10] de caractere
+   vetStatus: vetor[1..10] de caractere
+   contador_reservas: inteiro
+   i: inteiro
+   opcao: inteiro
+   nomeBusca: caractere
+   encontrado: logico
+
+inicio
+   contador_reservas <- 0
+   opcao <- 0
+
+   enquanto opcao <> 6 faca
+      escreval("======================================")
+      escreval("############# MENU #############")
+      escreval("1- Registrar reserva.")
+      escreval("2- Buscar pelo nome.")
+      escreval("3- Cancelar a reserva pelo nome.")
+      escreval("4- Todas as reservas.")
+      escreval("5- Total de reservas ativas.")
+      escreval("6- Sair.")
+      escreval("======================================")
+      escreva("Escolha uma opcao: ")
+      leia(opcao)
+
+      escolha opcao
+
+        caso 1
+          se contador_reservas = 10 entao
+            escreval("Sistema cheio! Maximo de 10 reservas.")
+          senao
+            contador_reservas <- contador_reservas + 1
+            escreval("==================================")
+            escreva("Digite o nome do cliente: ")
+            leia(vetNomes[contador_reservas])
+            escreva("Digite a quantidade de pessoas: ")
+            leia(vetQuantidade[contador_reservas])
+            escreva("Qual sera a data da reserva? ")
+            leia(vetData[contador_reservas])
+            vetStatus[contador_reservas] <- "Ativa"
+            escreval("Reserva registrada com sucesso!")
+          fimse
+
+        caso 2
+          se contador_reservas = 0 entao
+            escreval("Nenhuma reserva cadastrada.")
+          senao
+            escreva("Digite o nome para buscar: ")
+            leia(nomeBusca)
+            encontrado <- falso
+            para i de 1 ate contador_reservas faca
+          se vetNomes[i] = nomeBusca entao
+            escreval("==================================")
+            escreval("Nome: ", vetNomes[i])
+            escreval("Quantidade: ", vetQuantidade[i])
+            escreval("Data: ", vetData[i])
+            escreval("Status: ", vetStatus[i])
+          encontrado <- verdadeiro
+        fimse
+      fimpara
+          se encontrado = falso entao
+            escreval("Reserva nao encontrada.")
+        fimse
+      fimse
+
+        caso 3
+          se contador_reservas = 0 entao
+            escreval("Nenhuma reserva cadastrada.")
+          senao
+            escreva("Digite o nome da reserva a cancelar: ")
+            leia(nomeBusca)
+            encontrado <- falso
+            para i de 1 ate contador_reservas faca
+          se vetNomes[i] = nomeBusca entao
+            se vetStatus[i] = "Cancelada" entao
+              escreval("Essa reserva ja esta cancelada.")
+          senao
+            vetStatus[i] <- "Cancelada"
+            escreval("Reserva cancelada com sucesso!")
+          fimse
+        encontrado <- verdadeiro
+          fimse
+        fimpara
+          se encontrado = falso entao
+            escreval("Reserva nao encontrada.")
+        fimse
+      fimse
+
+        caso 4
+          se contador_reservas = 0 entao
+            escreval("Nenhuma reserva registrada.")
+          senao
+            escreval("====================================")
+            escreval("Todas as reservas:")
+          para i de 1 ate contador_reservas faca
+            escreval("Nome: ", vetNomes[i], " | Qtd: ", vetQuantidade[i], " | Data: ", vetData[i], " | Status: ", vetStatus[i])
+          fimpara
+        fimse
+
+        caso 5
+          se contador_reservas = 0 entao
+            escreval("Nenhuma reserva no sistema.")
+          senao
+        i <- 0
+          para i de 1 ate contador_reservas faca
+            se vetStatus[i] = "Ativa" entao
+        i <- i + 1
+          fimse
+        fimpara
+      escreval("===============================================")
+      escreval("Total de reservas ativas: ", i)
+      escreval("Total de reservas: ", contador_reservas)
+      escreval("===============================================")
+    fimse
+
+        caso 6
+          escreval("Encerrando o sistema... Ate logo!")
+
+        outrocaso
+          escreval("Opcao invalida! Escolha entre 1 e 6.")
+
+    fimescolha
+
+      escreval("")
+
+  fimenquanto
+
+fimalgoritmo
